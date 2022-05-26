@@ -3,14 +3,19 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
-  {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'cerita',
     pathMatch: 'full'
   },
+  {
+    path: 'cerita',
+    loadChildren: () => import('./cerita/cerita.module').then( m => m.CeritaPageModule)
+  },
+  {
+    path: 'cerita/:id',
+    loadChildren: () => import('./cerita-details/cerita-details.module').then( m => m.CeritaDetailsPageModule)
+  },
+
 ];
 
 @NgModule({

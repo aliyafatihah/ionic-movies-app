@@ -8,7 +8,7 @@ import { CeritaPageRoutingModule } from './cerita-routing.module';
 
 import { CeritaPage } from './cerita.page';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { FilterComponent } from '../filter/filter.component';
+import { FilterComponent } from '../../filter/filter.component';
 
 @NgModule({
   imports: [

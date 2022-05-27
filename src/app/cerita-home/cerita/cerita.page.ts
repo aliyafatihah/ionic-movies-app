@@ -4,8 +4,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { FilterComponent } from '../filter/filter.component';
-import { MovieService } from '../services/movie.service';
+import { FilterComponent } from '../../filter/filter.component';
+import { MovieService } from '../../services/movie.service';
 
 import { Movie } from './movie.model';
 
@@ -73,6 +73,7 @@ export class CeritaPage implements OnInit, OnDestroy {
       });
     }
     console.log(this.savedMovies);
+    this.movieService.modifySavedMovies(this.savedMovies);
   }
 
   toggleHeart(movie: string){

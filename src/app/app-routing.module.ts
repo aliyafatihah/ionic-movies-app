@@ -4,16 +4,12 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'cerita',
+    redirectTo: 'cerita-home',
     pathMatch: 'full'
   },
   {
-    path: 'cerita',
-    loadChildren: () => import('./cerita/cerita.module').then( m => m.CeritaPageModule)
-  },
-  {
-    path: 'cerita/:id',
-    loadChildren: () => import('./cerita-details/cerita-details.module').then( m => m.CeritaDetailsPageModule)
+    path: 'cerita-home',
+    loadChildren: () => import('./cerita-home/cerita-home.module').then( m => m.CeritaHomePageModule)
   },
 
 ];

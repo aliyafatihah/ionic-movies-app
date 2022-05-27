@@ -5,8 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { MovieService } from 'src/app/services/movie.service';
-import { CeritaPage } from '../cerita/cerita.page';
-import { Movie } from '../cerita/movie.model';
+import { Movie } from '../cerita-home/cerita/movie.model';
 
 @Component({
   selector: 'app-filter',

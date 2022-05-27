@@ -18,12 +18,17 @@
         <ion-icon name="search"></ion-icon>
       </ion-button>
     </ion-col>
+    <ion-col class="ion-text-end">
+      <ion-button (click)="openFilterModal()">
+        <ion-icon name="filter"></ion-icon>
+      </ion-button>
+    </ion-col>
   </ion-row>
 </form>
 <ion-row>
   <ion-col>
-    <ion-list *ngIf="searched">
-      <ion-item *ngFor="let result of movieList">
+    <ion-list>
+      <ion-item *ngFor="let result of loadedMovieList">
         <ion-avatar slot="start">
           <img [src]="result.image" *ngIf="result.image !== 'N/A'">
         </ion-avatar>

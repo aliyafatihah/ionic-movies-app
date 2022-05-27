@@ -1,8 +1,12 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { element } from 'protractor';
+import { ModalController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { FilterComponent } from '../filter/filter.component';
+import { MovieService } from '../services/movie.service';
+
 import { Movie } from './movie.model';
 
 @Component({
@@ -10,16 +14,22 @@ import { Movie } from './movie.model';
   templateUrl: './cerita.page.html',
   styleUrls: ['./cerita.page.scss'],
 })
-export class CeritaPage implements OnInit {
+export class CeritaPage implements OnInit, OnDestroy {
 
   form: FormGroup;
   movieList: Movie[] = [];
   savedMovies: Movie[] = [];
-  searched = false;
+  loadedMovieList: Movie[];
+  type = '';
+  private movieSub: Subscription;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private modalCtrl: ModalController, private movieService: MovieService) { }
 
   ngOnInit() {
+    this.movieSub = this.movieService.movies.subscribe(movies => {
+      this.loadedMovieList = movies;
+    });
+
     this.form = new FormGroup({
       searchTerm: new FormControl(null,{
         updateOn: 'blur',
@@ -41,7 +51,7 @@ export class CeritaPage implements OnInit {
         );
       });
       });
-      this.searched = true;
+      this.movieService.modifyMovies(this.movieList);
   }
 
   toggleLikeMovie(title: string, year: string, image: string){
@@ -69,6 +79,23 @@ export class CeritaPage implements OnInit {
     if(!this.savedMovies.some((el)=>  el.title === movie)){
       return true;
     }
+  }
+
+  openFilterModal(){
+    console.log('open modal');
+    this.modalCtrl.create({
+      component: FilterComponent,
+      componentProps:{searchedMovie: this.form.value.searchTerm},
+      cssClass: 'transparent-modal'
+    })
+      .then(modalEL => {
+      modalEL.present();
+      return modalEL.onDidDismiss();
+    });
+  }
+
+  ngOnDestroy(){
+    this.movieSub.unsubscribe(); //prevent leaks
   }
 
 }

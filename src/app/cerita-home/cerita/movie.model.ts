@@ -9,6 +9,7 @@ export class Movie {
     public actors?: string,
     public director?: string,
     public genre?: string,
-    public language?: string
+    public language?: string,
+    public descriptin?: string
   ){}
 }

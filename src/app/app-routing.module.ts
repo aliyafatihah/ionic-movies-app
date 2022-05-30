@@ -10,8 +10,7 @@ const routes: Routes = [
   {
     path: 'cerita-home',
     loadChildren: () => import('./cerita-home/cerita-home.module').then( m => m.CeritaHomePageModule)
-  },
-
+  }
 ];
 
 @NgModule({

@@ -39,18 +39,10 @@ const routes: Routes = [
             path: '',
             loadChildren: () => import('./saved/saved.module').then( m => m.SavedPageModule)
           },
-          // {
-          //   path: 'new',
-          //   loadChildren: () => import('./offers/new-offer/new-offer.module').then(m => m.NewOfferPageModule)
-          // },
-          // {
-          //   path: 'edit/:placeId',
-          //   loadChildren: () => import('./offers/edit-offer/edit-offer.module').then(m => m.EditOfferPageModule)
-          // },
-          // {
-          //   path: ':placeId',
-          //   loadChildren: () => import('./offers/offer-bookings/offer-bookings.module').then(m => m.OfferBookingsPageModule)
-          // }
+          {
+            path: ':ceritaId',
+            loadChildren: () => import('./saved/saved-movie-details/saved-movie-details.module').then( m => m.SavedMovieDetailsPageModule)
+          }
         ]
       },
       {

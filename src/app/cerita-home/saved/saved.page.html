@@ -10,14 +10,37 @@
   <ion-col>
     <ion-list>
       <ion-item *ngFor="let result of loadedMovieList">
-        <ion-avatar slot="start">
+        <ion-avatar slot="start" [routerLink]="[
+        '/',
+        'cerita-home',
+        'tabs',
+        'saved',
+        result.id
+        ]">
           <img [src]="result.image" *ngIf="result.image !== 'N/A'">
         </ion-avatar>
-        <h4 class="ion-padding">{{ result.title }}</h4>
-        <p>{{ result.year }}</p>
-        <ion-button fill="clear" (click)="dislikeMovie(result.title,result.year,result.image)">
-          <ion-icon name="heart"></ion-icon>
-        </ion-button>
+        <h4 class="ion-padding" [routerLink]="[
+        '/',
+        'cerita-home',
+        'tabs',
+        'saved',
+        result.id
+        ]">{{ result.title }}</h4>
+        <p [routerLink]="[
+        '/',
+        'cerita-home',
+        'tabs',
+        'saved',
+        result.id
+        ]">{{ result.year }}</p>
+        <ion-buttons slot="end">
+          <ion-button fill="clear">
+            <ion-icon name="create-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" (click)="dislikeMovie(result.id)">
+            <ion-icon name="heart"></ion-icon>
+          </ion-button>
+        </ion-buttons>
       </ion-item>
     </ion-list>
   </ion-col>

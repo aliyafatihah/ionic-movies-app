@@ -21,9 +21,9 @@ export class SavedPage implements OnInit {
     });
   }
 
-  dislikeMovie(title: string, year: string, image: string){
+  dislikeMovie(id: string){
     this.loadedMovieList.forEach((temp,index)=> {
-      if(temp.title === title){
+      if(temp.id === id){
         this.loadedMovieList.splice(index,1);
       }
     });

@@ -58,6 +58,7 @@ export class FilterComponent implements OnInit  {
         resData['Search'].forEach(movie => {
           this.loadedMovieList.push(
             new Movie(
+              movie['imdbID'],
               movie['Title'],
               movie['Year'],
               movie['Poster']
@@ -72,6 +73,7 @@ export class FilterComponent implements OnInit  {
         resData['Search'].forEach(movie => {
           this.loadedMovieList.push(
             new Movie(
+              movie['imdbID'],
               movie['Title'],
               movie['Year'],
               movie['Poster']
@@ -87,6 +89,7 @@ export class FilterComponent implements OnInit  {
         resData['Search'].forEach(movie => {
           this.loadedMovieList.push(
             new Movie(
+              movie['imdbID'],
               movie['Title'],
               movie['Year'],
               movie['Poster']
@@ -102,6 +105,7 @@ export class FilterComponent implements OnInit  {
         resData['Search'].forEach(movie => {
           this.loadedMovieList.push(
             new Movie(
+              movie['imdbID'],
               movie['Title'],
               movie['Year'],
               movie['Poster']

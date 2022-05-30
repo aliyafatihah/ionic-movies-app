@@ -19,27 +19,45 @@
       </ion-button>
     </ion-col>
     <ion-col class="ion-text-end">
-      <ion-button (click)="openFilterModal()">
+      <ion-button (click)="openFilterModal()" [disabled]="!searched">
         <ion-icon name="filter"></ion-icon>
       </ion-button>
     </ion-col>
   </ion-row>
 </form>
-<ion-row>
+<ion-row *ngFor="let result of loadedMovieList">
   <ion-col>
-    <ion-list>
-      <ion-item *ngFor="let result of loadedMovieList">
-        <ion-avatar slot="start">
+      <ion-item>
+        <ion-avatar slot="start" [routerLink]="[
+        '/',
+        'cerita-home',
+        'tabs',
+        'cerita',
+        result.id
+        ]">
           <img [src]="result.image" *ngIf="result.image !== 'N/A'">
         </ion-avatar>
-        <h4 class="ion-padding">{{ result.title }}</h4>
-        <p>{{ result.year }}</p>
-        <ion-button fill="clear" (click)="toggleLikeMovie(result.title,result.year,result.image)">
-          <ion-icon *ngIf="toggleHeart(result.title)" name="heart-outline"></ion-icon>
-          <ion-icon *ngIf="!toggleHeart(result.title)" name="heart"></ion-icon>
-        </ion-button>
+        <h4 class="ion-padding" [routerLink]="[
+        '/',
+        'cerita-home',
+        'tabs',
+        'cerita',
+        result.id
+        ]">{{ result.title }}</h4>
+        <p [routerLink]="[
+        '/',
+        'cerita-home',
+        'tabs',
+        'cerita',
+        result.id
+        ]">{{ result.year }}</p>
+        <ion-buttons slot="end">
+          <ion-button fill="clear" (click)="toggleLikeMovie(result.id,result.title,result.year,result.image)">
+            <ion-icon *ngIf="toggleHeart(result.id)" name="heart-outline"></ion-icon>
+            <ion-icon *ngIf="!toggleHeart(result.id)" name="heart"></ion-icon>
+          </ion-button>
+        </ion-buttons>
       </ion-item>
-    </ion-list>
   </ion-col>
 </ion-row>
 </ion-grid>

@@ -10,6 +10,7 @@ import { Movie } from '../cerita-home/cerita/movie.model';
 export class MovieService {
   private _movies = new BehaviorSubject<Movie[]>([]);
   private _savedMovies = new BehaviorSubject<Movie[]>([]);
+  private cerita: Movie[];
 
   constructor(){}
 
@@ -28,4 +29,5 @@ export class MovieService {
   modifySavedMovies(newMovieList: Movie[]){
     this._savedMovies.next(newMovieList);
     }
+
 }

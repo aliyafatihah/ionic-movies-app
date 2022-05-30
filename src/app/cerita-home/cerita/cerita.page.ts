@@ -21,6 +21,8 @@ export class CeritaPage implements OnInit, OnDestroy {
   savedMovies: Movie[] = [];
   loadedMovieList: Movie[];
   type = '';
+  searched = false;
+
   private movieSub: Subscription;
 
   constructor(private http: HttpClient, private modalCtrl: ModalController, private movieService: MovieService) { }
@@ -28,6 +30,10 @@ export class CeritaPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.movieSub = this.movieService.movies.subscribe(movies => {
       this.loadedMovieList = movies;
+    });
+
+    this.movieSub = this.movieService.savedMovies.subscribe(movies => {
+      this.savedMovies = movies;
     });
 
     this.form = new FormGroup({
@@ -44,6 +50,7 @@ export class CeritaPage implements OnInit, OnDestroy {
       resData['Search'].forEach(movie => {
         this.movieList.push(
           new Movie(
+            movie['imdbID'],
             movie['Title'],
             movie['Year'],
             movie['Poster']
@@ -52,12 +59,14 @@ export class CeritaPage implements OnInit, OnDestroy {
       });
       });
       this.movieService.modifyMovies(this.movieList);
+      this.searched = true;
   }
 
-  toggleLikeMovie(title: string, year: string, image: string){
-    if(this.toggleHeart(title)){
+  toggleLikeMovie(id: string, title: string, year: string, image: string){
+    if(this.toggleHeart(id)){
       this.savedMovies.push(
         new Movie (
+          id,
           title,
           year,
           image
@@ -66,9 +75,8 @@ export class CeritaPage implements OnInit, OnDestroy {
     }
     else{
       this.savedMovies.forEach((temp,index)=> {
-        if(temp.title === title){
+        if(temp.id === id){
           this.savedMovies.splice(index,1);
-          console.log('removed');
         }
       });
     }
@@ -76,8 +84,8 @@ export class CeritaPage implements OnInit, OnDestroy {
     this.movieService.modifySavedMovies(this.savedMovies);
   }
 
-  toggleHeart(movie: string){
-    if(!this.savedMovies.some((el)=>  el.title === movie)){
+  toggleHeart(id: string){
+    if(!this.savedMovies.some((el)=>  el.id === id)){
       return true;
     }
   }

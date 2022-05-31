@@ -52,7 +52,7 @@
         result.id
         ]">{{ result.year }}</p>
         <ion-buttons slot="end">
-          <ion-button fill="clear" (click)="toggleLikeMovie(result.id,result.title,result.year,result.image)">
+          <ion-button fill="clear" (click)="toggleLikeMovie(result.id)">
             <ion-icon *ngIf="toggleHeart(result.id)" name="heart-outline"></ion-icon>
             <ion-icon *ngIf="!toggleHeart(result.id)" name="heart"></ion-icon>
           </ion-button>

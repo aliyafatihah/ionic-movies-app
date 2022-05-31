@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add Description</ion-title>
+  <ion-buttons slot="primary">
+    <ion-button (click)="onCancel()">
+      <ion-icon name="close"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding ion-text-center">
+  <form [formGroup]="form">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item lines="none">
+          <ion-label position="floating">Description</ion-label>
+          <ion-textarea rows="3" formControlName="description"></ion-textarea>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-button color="primary" [disabled]="!form.valid" (click)="onSave()">Apply Changes</ion-button>
+</form>
+</ion-content>
+

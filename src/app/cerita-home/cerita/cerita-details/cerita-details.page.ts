@@ -35,21 +35,7 @@ export class CeritaDetailsPage implements OnInit {
       }
 
       this.ceritaId = paramMap.get('ceritaId');
-
-      this.http.get<any>('https://www.omdbapi.com/?apikey=2c3f3c8&i=' + this.ceritaId).subscribe(resData => {
-      this.movie = new Movie(
-        resData['imdbID'],
-        resData['Title'],
-        resData['Year'],
-        resData['Poster'],
-        resData['Plot'],
-        resData['imdbRating'],
-        resData['Actors'],
-        resData['Director'],
-        resData['Genre'],
-        resData['Language']
-      );
-        });
+      this.movie = this.movieService.getMovie(this.ceritaId);
         this.movieSub = this.movieService.savedMovies.subscribe(movies => {
           this.savedMovies = movies;
         });
@@ -58,31 +44,19 @@ export class CeritaDetailsPage implements OnInit {
 
   toggleLikeMovie(){
     if(this.toggleHeart(this.movie.id)){
-      this.savedMovies.push(
-        new Movie (
-          this.movie.id,
-          this.movie.title,
-          this.movie.year,
-          this.movie.image,
-          this.movie.plot,
-          this.movie.rating,
-          this.movie.actors,
-          this.movie.director,
-          this.movie.genre,
-          this.movie.language
-        )
-      );
+      this.movieService.addSavedMovie(this.movie.id);
+      this.savedMovies.push(this.movieService.getMovie(this.movie.id));
+      this.movieService.modifySavedMovies(this.savedMovies);
     }
     else{
       this.savedMovies.forEach((temp,index)=> {
         if(temp.id === this.movie.id){
           this.savedMovies.splice(index,1);
-          console.log('removed');
+          this.movieService.deleteSavedMovie(temp.key);
+          this.movieService.modifySavedMovies(this.savedMovies);
         }
       });
     }
-    console.log(this.savedMovies);
-    this.movieService.modifySavedMovies(this.savedMovies);
   }
 
   toggleHeart(id: string){

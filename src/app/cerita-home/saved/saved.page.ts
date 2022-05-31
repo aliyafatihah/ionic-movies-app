@@ -19,15 +19,22 @@ export class SavedPage implements OnInit {
     this.movieSub = this.movieService.savedMovies.subscribe(movies => {
       this.loadedMovieList = movies;
     });
+    this.movieService.fetchSavedMovies();
+  }
+
+  ionViewWillEnter(){
+    this.movieService.fetchSavedMovies();
   }
 
   dislikeMovie(id: string){
-    this.loadedMovieList.forEach((temp,index)=> {
-      if(temp.id === id){
-        this.loadedMovieList.splice(index,1);
-      }
-    });
-    this.movieService.modifySavedMovies(this.loadedMovieList);
-  }
+      this.loadedMovieList.forEach((temp,index)=> {
+        if(temp.id === id){
+          this.loadedMovieList.splice(index,1);
+          this.movieService.deleteSavedMovie(temp.key);
+          this.movieService.modifySavedMovies(this.loadedMovieList);
+        }
+      });
+
+}
 
 }

@@ -28,6 +28,7 @@ export class CeritaPage implements OnInit, OnDestroy {
   constructor(private http: HttpClient, private modalCtrl: ModalController, private movieService: MovieService) { }
 
   ngOnInit() {
+    this.movieService.fetchSavedMovies();
     this.movieSub = this.movieService.movies.subscribe(movies => {
       this.loadedMovieList = movies;
     });
@@ -42,6 +43,10 @@ export class CeritaPage implements OnInit, OnDestroy {
         validators: [Validators.required]
       })
     });
+  }
+
+  ionViewWillEnter(){
+    this.movieService.fetchSavedMovies();
   }
 
   searchMovie(){
@@ -62,26 +67,21 @@ export class CeritaPage implements OnInit, OnDestroy {
       this.searched = true;
   }
 
-  toggleLikeMovie(id: string, title: string, year: string, image: string){
+  toggleLikeMovie(id: string){
     if(this.toggleHeart(id)){
-      this.savedMovies.push(
-        new Movie (
-          id,
-          title,
-          year,
-          image
-        )
-      );
+      this.movieService.addSavedMovie(id);
+      this.savedMovies.push(this.movieService.getMovie(id));
+      this.movieService.modifySavedMovies(this.savedMovies);
     }
     else{
       this.savedMovies.forEach((temp,index)=> {
         if(temp.id === id){
           this.savedMovies.splice(index,1);
+          this.movieService.deleteSavedMovie(temp.key);
+          this.movieService.modifySavedMovies(this.savedMovies);
         }
       });
     }
-    console.log(this.savedMovies);
-    this.movieService.modifySavedMovies(this.savedMovies);
   }
 
   toggleHeart(id: string){

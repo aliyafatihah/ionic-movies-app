@@ -2,10 +2,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { MovieService } from 'src/app/services/movie.service';
 import { Movie } from '../../cerita/movie.model';
+import { AddDescriptionComponent } from '../add-description/add-description.component';
+
 
 @Component({
   selector: 'app-saved-movie-details',
@@ -26,7 +28,7 @@ export class SavedMovieDetailsPage implements OnInit {
   private movieSub: Subscription;
 
   constructor(private router: Router, private navCtrl: NavController, private route: ActivatedRoute, private movieService: MovieService,
-    private http: HttpClient) { }
+    private http: HttpClient, private modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
@@ -36,21 +38,7 @@ export class SavedMovieDetailsPage implements OnInit {
       }
 
       this.ceritaId = paramMap.get('ceritaId');
-
-      this.http.get<any>('https://www.omdbapi.com/?apikey=2c3f3c8&i=' + this.ceritaId).subscribe(resData => {
-      this.movie = new Movie(
-        resData['imdbID'],
-        resData['Title'],
-        resData['Year'],
-        resData['Poster'],
-        resData['Plot'],
-        resData['imdbRating'],
-        resData['Actors'],
-        resData['Director'],
-        resData['Genre'],
-        resData['Language']
-      );
-        });
+      this.movie = this.movieService.getMovie(this.ceritaId);
         this.movieSub = this.movieService.savedMovies.subscribe(movies => {
           this.savedMovies = movies;
         });
@@ -61,10 +49,24 @@ export class SavedMovieDetailsPage implements OnInit {
     this.savedMovies.forEach((temp,index)=> {
       if(temp.id === this.movie.id){
         this.savedMovies.splice(index,1);
+        this.movieService.deleteSavedMovie(temp.key);
+        this.movieService.modifySavedMovies(this.savedMovies);
       }
     });
-    this.movieService.modifySavedMovies(this.savedMovies);
     this.navCtrl.navigateBack('/cerita-home/tabs/saved');
+  }
+
+  openAddModal(){
+    console.log('open modal');
+    this.modalCtrl.create({
+      component: AddDescriptionComponent,
+      componentProps:{},
+      cssClass: ''
+    })
+      .then(modalEL => {
+      modalEL.present();
+      return modalEL.onDidDismiss();
+    });
   }
 
 }

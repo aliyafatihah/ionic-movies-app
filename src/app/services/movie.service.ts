@@ -63,13 +63,15 @@ export class MovieService {
               movies[key].director,
               movies[key].genre,
               movies[key].language,
-              '',
+              movies[key].description,
               key
             )
           );
         }
       }
         this.modifySavedMovies(savedMovieList);
+        console.log('Movie Service:');
+        console.log(savedMovieList);
       });
   }
 
@@ -88,7 +90,8 @@ export class MovieService {
         resData['Actors'],
         resData['Director'],
         resData['Genre'],
-        resData['Language']
+        resData['Language'],
+        'N/A'
       );
       this.http
       .post(
@@ -107,7 +110,9 @@ export class MovieService {
 
   }
 
-  updateSavedMovie(){}
+  updateSavedMovie(){
+
+  }
 
   getMovie(id: string){
     const loadedMovie = new Movie(
@@ -128,6 +133,7 @@ export class MovieService {
        loadedMovie.director = resData['Director'];
        loadedMovie.genre = resData['Genre'];
        loadedMovie.language = resData['Language'];
+       loadedMovie.description = 'N/A';
 
   });
   return loadedMovie;

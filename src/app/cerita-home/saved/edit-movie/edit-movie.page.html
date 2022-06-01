@@ -1,9 +1,55 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>edit-movie</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/cerita-home/tabs/saved"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ movie.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <form [formGroup]="form">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item lines="none">
+          <ion-img [src]="movie.image"></ion-img>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">Title</ion-label>
+          <ion-input type="text" formControlName="title"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Year</ion-label>
+          <ion-input type="text" formControlName="year"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Plot</ion-label>
+          <ion-textarea formControlName="plot" rows="4"></ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Rating</ion-label>
+          <ion-input type="number" formControlName="rating"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Director</ion-label>
+          <ion-input type="text" formControlName="director"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Actors</ion-label>
+          <ion-textarea formControlName="actor" rows="2"></ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Description</ion-label>
+          <ion-input type="text" formControlName="description"></ion-input>
+        </ion-item>
+        <ion-button color="primary" [disabled]="!form.valid" (click)="onSave()">Apply Changes</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</form>
 </ion-content>

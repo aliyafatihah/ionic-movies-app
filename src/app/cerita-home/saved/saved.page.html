@@ -34,7 +34,14 @@
         result.id
         ]">{{ result.year }}</p>
         <ion-buttons slot="end">
-          <ion-button fill="clear">
+          <ion-button fill="clear" [routerLink]="[
+          '/',
+          'cerita-home',
+          'tabs',
+          'saved',
+          'edit',
+          result.id
+          ]">
             <ion-icon name="create-outline"></ion-icon>
           </ion-button>
           <ion-button fill="clear" (click)="dislikeMovie(result.id)">

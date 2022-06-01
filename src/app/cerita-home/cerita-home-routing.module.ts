@@ -42,6 +42,10 @@ const routes: Routes = [
           {
             path: ':ceritaId',
             loadChildren: () => import('./saved/saved-movie-details/saved-movie-details.module').then( m => m.SavedMovieDetailsPageModule)
+          },
+          {
+            path: 'edit/:ceritaId',
+            loadChildren: () => import('./saved/edit-movie/edit-movie.module').then( m => m.EditMoviePageModule)
           }
         ]
       },

@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Movie } from '../../cerita/movie.model';
+import { MovieService } from 'src/app/services/movie.service';
 
 @Component({
   selector: 'app-add-description',
@@ -9,9 +12,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class AddDescriptionComponent implements OnInit {
 
+  @Input() movieObj: Movie;
   form: FormGroup;
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private modalCtrl: ModalController, private http: HttpClient, private movieService: MovieService) { }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -27,7 +31,12 @@ export class AddDescriptionComponent implements OnInit {
   }
 
   onSave(){
-    //add save code here
+    this.movieObj.description = this.form.value.description;
+    this.http.put(`https://cerita-app-fa00a-default-rtdb.asia-southeast1.firebasedatabase.app/saved-movies/${this.movieObj.key}.json`,{
+      ...this.movieObj
+    })
+    .subscribe();
+    this.modalCtrl.dismiss();
   }
 
 }

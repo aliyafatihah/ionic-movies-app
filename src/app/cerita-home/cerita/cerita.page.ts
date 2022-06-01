@@ -91,7 +91,6 @@ export class CeritaPage implements OnInit, OnDestroy {
   }
 
   openFilterModal(){
-    console.log('open modal');
     this.modalCtrl.create({
       component: FilterComponent,
       componentProps:{searchedMovie: this.form.value.searchTerm},

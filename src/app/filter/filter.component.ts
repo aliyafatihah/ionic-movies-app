@@ -50,8 +50,8 @@ export class FilterComponent implements OnInit  {
   }
 
   filter(){
-    console.log(this.form.value.year);
-    console.log(this.form.value.category);
+    // console.log(this.form.value.year);
+    // console.log(this.form.value.category);
     if(this.form.value.year !== 'All' && this.form.value.category !== 'All'){
       this.http.get<any>('https://www.omdbapi.com/?apikey=2c3f3c8&s=' + this.searchedMovie
       + '&y=' + this.form.value.year + '&type=' + this.form.value.category).subscribe(resData => {

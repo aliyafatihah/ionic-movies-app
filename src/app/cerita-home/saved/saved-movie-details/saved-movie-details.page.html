@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/cerita-home/tabs/cerita"></ion-back-button>
+      <ion-back-button defaultHref="/cerita-home/tabs/saved"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button fill="clear" (click)="dislikeMovie()">
@@ -41,7 +41,11 @@
             <ion-label text-wrap>{{ movie.actors }}</ion-label>
           </ion-item>
 
-          <ion-buttons>
+          <ion-item lines="none" *ngIf="!descBool">
+            <ion-icon name="pencil-outline" slot="start"></ion-icon>
+            <ion-label text-wrap>{{ movie.description }}</ion-label>
+          </ion-item>
+          <ion-buttons *ngIf="descBool">
             <ion-button (click)="openAddModal()"> Add a Description</ion-button>
           </ion-buttons>
 

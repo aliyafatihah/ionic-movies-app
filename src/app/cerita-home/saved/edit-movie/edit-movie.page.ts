@@ -15,14 +15,13 @@ import { Movie } from '../../cerita/movie.model';
 export class EditMoviePage implements OnInit {
 
   ceritaId: string;
-  descBool = true;
   movie: Movie;
+  editedMovie: Movie;
   savedMovies: Movie[] = [];
   form: FormGroup;
   private movieSub: Subscription;
 
-  constructor(private router: Router, private navCtrl: NavController, private route: ActivatedRoute, private movieService: MovieService,
-    private http: HttpClient, private modalCtrl: ModalController) { }
+  constructor(private navCtrl: NavController, private route: ActivatedRoute, private movieService: MovieService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
@@ -51,9 +50,6 @@ export class EditMoviePage implements OnInit {
              temp.description,
              temp.key
             );
-            if(temp.description === ''){
-              this.descBool = false;
-            }
           }
         });
         this.form = new FormGroup({
@@ -88,6 +84,43 @@ export class EditMoviePage implements OnInit {
       });
   }
 
-  onSave(){}
+  onSave(){
+    this.editedMovie = new Movie(
+      this.movie.id,
+      this.form.value.title,
+      this.form.value.year,
+      this.movie.image,
+      this.form.value.plot,
+      '' + this.form.value.rating,
+      this.form.value.actor,
+      this.form.value.director,
+      this.movie.genre,
+      this.movie.language,
+      this.form.value.description,
+      this.movie.key
+    );
+    this.movieService.updateSavedMovie(this.editedMovie);
+    this.savedMovies.forEach((temp)=> {
+      if(temp.id === this.ceritaId){
+         temp = new Movie(
+         this.editedMovie.id,
+         this.editedMovie.title,
+         this.editedMovie.year,
+         this.editedMovie.image,
+         this.editedMovie.plot,
+         this.editedMovie.rating,
+         this.editedMovie.actors,
+         this.editedMovie.director,
+         this.editedMovie.genre,
+         this.editedMovie.language,
+         this.editedMovie.description,
+         this.editedMovie.key
+        );
+      }
+    });
+    // this.movieService.modifySavedMovies(this.savedMovies);
+    this.navCtrl.navigateBack('/cerita-home/tabs/saved');
+  }
+
 
 }

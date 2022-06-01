@@ -70,8 +70,6 @@ export class MovieService {
         }
       }
         this.modifySavedMovies(savedMovieList);
-        console.log('Movie Service:');
-        console.log(savedMovieList);
       });
   }
 
@@ -110,8 +108,12 @@ export class MovieService {
 
   }
 
-  updateSavedMovie(){
-
+  updateSavedMovie(movieObj: Movie){
+    this.http.put(`https://cerita-app-fa00a-default-rtdb.asia-southeast1.firebasedatabase.app/saved-movies/${movieObj.key}.json`,{
+      ...movieObj
+    })
+    .subscribe();
+    console.log('Saved changes');
   }
 
   getMovie(id: string){

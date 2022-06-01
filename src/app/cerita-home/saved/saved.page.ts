@@ -22,6 +22,10 @@ export class SavedPage implements OnInit {
     this.movieService.fetchSavedMovies();
   }
 
+  ionViewDidEnter(){
+    this.movieService.fetchSavedMovies();
+  }
+
   dislikeMovie(id: string){
       this.loadedMovieList.forEach((temp,index)=> {
         if(temp.id === id){

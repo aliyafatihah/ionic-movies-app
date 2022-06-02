@@ -117,7 +117,7 @@ export class CeritaPage implements OnInit, OnDestroy {
 
   //load more results
   loadData(event) {
-    if(this.filtered === true){
+    if(this.filtered === true || this.searched === false){
       this.numTimesLeft = 0;
     }else{
       setTimeout(() => {

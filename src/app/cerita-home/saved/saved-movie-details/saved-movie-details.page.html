@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/cerita-home/tabs/saved"></ion-back-button>
     </ion-buttons>
@@ -8,7 +8,7 @@
         <ion-icon name="heart"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>{{ movie.title }}</ion-title>
+    <ion-title><ion-text color="light">{{ movie.title }}</ion-text></ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -23,10 +23,10 @@
           </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content text-center>
-          <ion-item *ngIf="movie.image !== 'N/A'">
+          <ion-item *ngIf="movie.image !== 'N/A'" lines="none">
             <img [src]="movie.image" class="info-img">
           </ion-item>
-          <ion-item>
+          <ion-item lines="none">
             {{ movie.plot }}
           </ion-item>
           <ion-item lines="none">
@@ -48,10 +48,20 @@
             <ion-icon name="pencil-outline" slot="start"></ion-icon>
             <ion-label text-wrap>{{ movie.description }}</ion-label>
           </ion-item>
-          <ion-buttons *ngIf="descBool">
+          <ion-buttons class="ion-justify-content-center" *ngIf="descBool">
             <ion-button (click)="openAddModal()"> Add a Description</ion-button>
           </ion-buttons>
 
         </ion-card-content>
       </ion-card>
+      <ion-buttons class="ion-justify-content-center">
+        <ion-button [routerLink]="[
+        '/',
+        'cerita-home',
+        'tabs',
+        'saved',
+        'edit',
+        movie.id
+        ]"><ion-icon name="create-outline" style="padding:5px ;"></ion-icon>Edit</ion-button>
+      </ion-buttons>
 </ion-content>

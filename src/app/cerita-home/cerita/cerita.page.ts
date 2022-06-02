@@ -102,7 +102,6 @@ export class CeritaPage implements OnInit, OnDestroy {
       return modalEL.onDidDismiss();
     })
     .then(resultData => {
-      console.log(resultData.role);
       if(resultData.role === 'true'){
         this.filtered = true;
       }else{
@@ -116,13 +115,12 @@ export class CeritaPage implements OnInit, OnDestroy {
     this.movieSub2.unsubscribe();
   }
 
+  //load more results
   loadData(event) {
     if(this.filtered === true){
       this.numTimesLeft = 0;
     }else{
-      console.log('load');
       setTimeout(() => {
-        console.log('Done');
         this.pageNum += 1;
         this.movieService.searchMovieByPage(this.form.value.searchTerm,'' + this.pageNum);
         this.numTimesLeft -= 1;

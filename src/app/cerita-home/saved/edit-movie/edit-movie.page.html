@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/cerita-home/tabs/saved"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ movie.title }}</ion-title>
+    <ion-title><ion-text color="light">Edit: {{ movie.title }}</ion-text></ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,7 +12,7 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <ion-item lines="none">
+        <ion-item lines="none" *ngIf="movie.image !== 'N/A'">
           <ion-img [src]="movie.image"></ion-img>
         </ion-item>
       </ion-col>
@@ -47,7 +47,7 @@
           <ion-label position="floating">Description</ion-label>
           <ion-input type="text" formControlName="description"></ion-input>
         </ion-item>
-        <ion-button color="primary" [disabled]="!form.valid" (click)="onSave()">Apply Changes</ion-button>
+        <ion-button  color="primary" [disabled]="!form.valid" (click)="onSave()"><ion-text color="light">Apply Changes</ion-text></ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

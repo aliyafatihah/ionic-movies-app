@@ -1,6 +1,6 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Add Description</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title><ion-text color="light">Add Description</ion-text></ion-title>
   <ion-buttons slot="primary">
     <ion-button (click)="onCancel()">
       <ion-icon name="close"></ion-icon>
@@ -14,7 +14,7 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <ion-item lines="none">
+        <ion-item>
           <ion-label position="floating">Description</ion-label>
           <ion-textarea rows="3" formControlName="description"></ion-textarea>
         </ion-item>

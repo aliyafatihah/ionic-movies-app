@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/cerita-home/tabs/cerita"></ion-back-button>
     </ion-buttons>
@@ -9,7 +9,7 @@
         <ion-icon *ngIf="!toggleHeart(movie.id)" name="heart"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>{{ movie.title }}</ion-title>
+    <ion-title><ion-text color="light">{{ movie.title }}</ion-text></ion-title>
   </ion-toolbar>
 </ion-header>
 

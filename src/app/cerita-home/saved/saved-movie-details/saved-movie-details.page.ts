@@ -90,13 +90,7 @@ export class SavedMovieDetailsPage implements OnInit, OnDestroy {
         modalEL.present();
         return modalEL.onDidDismiss().then(() => {
           this.movieService.fetchSavedMovies();
-          if (
-            this.movie.description.length < 0 ||
-            this.movie.description === '' ||
-            this.movie.description === null
-          ) {
-            this.descBool = true;
-          } else {
+          if (this.movie.description !== 'N/A') {
             this.descBool = false;
           }
         });

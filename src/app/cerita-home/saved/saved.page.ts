@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MovieService } from 'src/app/services/movie.service';
 import { Movie } from '../cerita/movie.model';
@@ -8,12 +8,13 @@ import { Movie } from '../cerita/movie.model';
   templateUrl: './saved.page.html',
   styleUrls: ['./saved.page.scss'],
 })
-export class SavedPage implements OnInit {
+export class SavedPage implements OnInit, OnDestroy {
 
   movieSub: Subscription;
   loadedMovieList: Movie[];
 
   constructor(private movieService: MovieService) { }
+
 
   ngOnInit() {
     this.movieSub = this.movieService.savedMovies.subscribe(movies => {
@@ -22,10 +23,15 @@ export class SavedPage implements OnInit {
     this.movieService.fetchSavedMovies();
   }
 
+  ngOnDestroy(): void {
+    this.movieSub.unsubscribe();
+  }
+
   ionViewDidEnter(){
     this.movieService.fetchSavedMovies();
   }
 
+  //remove movie from database
   dislikeMovie(id: string){
       this.loadedMovieList.forEach((temp,index)=> {
         if(temp.id === id){

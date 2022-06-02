@@ -11,32 +11,39 @@ import { MovieService } from 'src/app/services/movie.service';
   styleUrls: ['./add-description.component.scss'],
 })
 export class AddDescriptionComponent implements OnInit {
-
   @Input() movieObj: Movie;
   form: FormGroup;
 
-  constructor(private modalCtrl: ModalController, private http: HttpClient, private movieService: MovieService) { }
+  constructor(
+    private modalCtrl: ModalController,
+    private http: HttpClient,
+    private movieService: MovieService
+  ) {}
 
   ngOnInit() {
     this.form = new FormGroup({
-      description: new FormControl(null,{
+      description: new FormControl(null, {
         updateOn: 'blur',
-        validators: [Validators.required]
-      })
+        validators: [Validators.required],
+      }),
     });
   }
 
-  onCancel(){
+  onCancel() {
     this.modalCtrl.dismiss(null, 'cancel');
   }
 
-  onSave(){
+  //update description value in the database
+  onSave() {
     this.movieObj.description = this.form.value.description;
-    this.http.put(`https://cerita-app-fa00a-default-rtdb.asia-southeast1.firebasedatabase.app/saved-movies/${this.movieObj.key}.json`,{
-      ...this.movieObj
-    })
-    .subscribe();
+    this.http
+      .put(
+        `https://cerita-app-fa00a-default-rtdb.asia-southeast1.firebasedatabase.app/saved-movies/${this.movieObj.key}.json`,
+        {
+          ...this.movieObj,
+        }
+      )
+      .subscribe();
     this.modalCtrl.dismiss();
   }
-
 }

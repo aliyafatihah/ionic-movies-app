@@ -22,8 +22,10 @@ export class CeritaPage implements OnInit, OnDestroy {
   loadedMovieList: Movie[];
   type = '';
   searched = false;
+  results = false;
 
   private movieSub: Subscription;
+  private movieSub2: Subscription;
 
   constructor(private http: HttpClient, private modalCtrl: ModalController, private movieService: MovieService) { }
 
@@ -33,7 +35,7 @@ export class CeritaPage implements OnInit, OnDestroy {
       this.loadedMovieList = movies;
     });
 
-    this.movieSub = this.movieService.savedMovies.subscribe(movies => {
+    this.movieSub2 = this.movieService.savedMovies.subscribe(movies => {
       this.savedMovies = movies;
     });
 
@@ -45,13 +47,16 @@ export class CeritaPage implements OnInit, OnDestroy {
     });
   }
 
+  //fetch results from database
   ionViewWillEnter(){
     this.movieService.fetchSavedMovies();
   }
 
+  //search function to retrieve a list of movies from omdb api with s (search) parameter
   searchMovie(){
     this.movieList = [];
     this.http.get<any>('https://www.omdbapi.com/?apikey=2c3f3c8&s=' + this.form.value.searchTerm).subscribe(resData => {
+    if(resData['Response'] === 'True'){
       resData['Search'].forEach(movie => {
         this.movieList.push(
           new Movie(
@@ -62,11 +67,20 @@ export class CeritaPage implements OnInit, OnDestroy {
           )
         );
       });
+      this.results = true;
+    }else{
+      console.log('No results not found');
+      alert('No results not found');
+    }
+
       });
       this.movieService.modifyMovies(this.movieList);
       this.searched = true;
   }
 
+  //toggle the like\unlike button
+  //if like then it is added into the database
+  //if unlike then it is deleted from the database
   toggleLikeMovie(id: string){
     if(this.toggleHeart(id)){
       this.movieService.addSavedMovie(id);
@@ -84,12 +98,14 @@ export class CeritaPage implements OnInit, OnDestroy {
     }
   }
 
+  //check if movie exists in database
   toggleHeart(id: string){
     if(!this.savedMovies.some((el)=>  el.id === id)){
       return true;
     }
   }
 
+  //open filter component modal and pass the searched term to select year & category
   openFilterModal(){
     this.modalCtrl.create({
       component: FilterComponent,
@@ -103,7 +119,8 @@ export class CeritaPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    this.movieSub.unsubscribe(); //prevent leaks
+    this.movieSub.unsubscribe();
+    this.movieSub2.unsubscribe();
   }
 
 }

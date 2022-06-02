@@ -13,6 +13,7 @@ export class MovieService {
   private _movies = new BehaviorSubject<Movie[]>([]);
   private _savedMovies = new BehaviorSubject<Movie[]>([]);
   constructor(private http: HttpClient) {}
+  movieList = [];
 
   get movies() {
     return this._movies.asObservable();
@@ -134,5 +135,31 @@ export class MovieService {
         loadedMovie.description = 'N/A';
       });
     return loadedMovie;
+  }
+
+  //load more pages data
+  searchMovieByPage(searchTerm: string, page: string){
+    if(page === '1'){
+      this.movieList = [];
+    }
+    this.http.get<any>(`https://www.omdbapi.com/?apikey=2c3f3c8&s=${searchTerm}&page=${page}`).subscribe(resData => {
+      if(resData['Response'] === 'True'){
+        resData['Search'].forEach(movie => {
+          this.movieList.push(
+            new Movie(
+              movie['imdbID'],
+              movie['Title'],
+              movie['Year'],
+              movie['Poster']
+            )
+          );
+        });
+      }else{
+        console.log('No results found');
+        alert('No results found');
+      }
+        });
+
+      this.modifyMovies(this.movieList);
   }
 }

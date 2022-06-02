@@ -23,9 +23,12 @@
           </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content text-center>
-          <img [src]="movie.image" class="info-img">
-          {{ movie.plot }}
-
+          <ion-item *ngIf="movie.image !== 'N/A'">
+            <img [src]="movie.image" class="info-img">
+          </ion-item>
+          <ion-item>
+            {{ movie.plot }}
+          </ion-item>
           <ion-item lines="none">
             <ion-icon name="star-half-outline" slot="start"></ion-icon>
             <ion-label>{{ movie.rating }}</ion-label>

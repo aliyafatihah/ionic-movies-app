@@ -23,6 +23,10 @@ export class CeritaPage implements OnInit, OnDestroy {
   type = '';
   searched = false;
   results = false;
+  numTimesLeft = 10;
+  pageNum = 1;
+  filtered = false;
+
 
   private movieSub: Subscription;
   private movieSub2: Subscription;
@@ -54,28 +58,9 @@ export class CeritaPage implements OnInit, OnDestroy {
 
   //search function to retrieve a list of movies from omdb api with s (search) parameter
   searchMovie(){
-    this.movieList = [];
-    this.http.get<any>('https://www.omdbapi.com/?apikey=2c3f3c8&s=' + this.form.value.searchTerm).subscribe(resData => {
-    if(resData['Response'] === 'True'){
-      resData['Search'].forEach(movie => {
-        this.movieList.push(
-          new Movie(
-            movie['imdbID'],
-            movie['Title'],
-            movie['Year'],
-            movie['Poster']
-          )
-        );
-      });
-      this.results = true;
-    }else{
-      console.log('No results not found');
-      alert('No results not found');
-    }
-
-      });
-      this.movieService.modifyMovies(this.movieList);
-      this.searched = true;
+    this.filtered = false;
+    this.movieService.searchMovieByPage(this.form.value.searchTerm,'1');
+    this.searched = true;
   }
 
   //toggle the like\unlike button
@@ -115,12 +100,35 @@ export class CeritaPage implements OnInit, OnDestroy {
       .then(modalEL => {
       modalEL.present();
       return modalEL.onDidDismiss();
+    })
+    .then(resultData => {
+      console.log(resultData.role);
+      if(resultData.role === 'true'){
+        this.filtered = true;
+      }else{
+        this.filtered = false;
+      }
     });
   }
 
   ngOnDestroy(){
     this.movieSub.unsubscribe();
     this.movieSub2.unsubscribe();
+  }
+
+  loadData(event) {
+    if(this.filtered === true){
+      this.numTimesLeft = 0;
+    }else{
+      console.log('load');
+      setTimeout(() => {
+        console.log('Done');
+        this.pageNum += 1;
+        this.movieService.searchMovieByPage(this.form.value.searchTerm,'' + this.pageNum);
+        this.numTimesLeft -= 1;
+        event.target.complete();
+      }, 500);
+    }
   }
 
 }

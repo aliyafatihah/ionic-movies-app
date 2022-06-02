@@ -12,7 +12,7 @@ import { Movie } from '../cerita-home/cerita/movie.model';
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss'],
 })
-export class FilterComponent implements OnInit,OnDestroy {
+export class FilterComponent implements OnInit{
   @Input() searchedMovie: string;
   form: FormGroup;
 
@@ -22,7 +22,6 @@ export class FilterComponent implements OnInit,OnDestroy {
   loadedMovieList: Movie[] = [];
   yearList = ['All'];
   categories = ['All', 'Episode', 'Movie', 'Series'];
-  private movieSub: Subscription;
 
   constructor(
     private modalCtrl: ModalController,
@@ -46,16 +45,13 @@ export class FilterComponent implements OnInit,OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.movieSub.unsubscribe();
-    }
-
   onCancel() {
     this.modalCtrl.dismiss(null, 'cancel');
   }
 
   //check value of year and category from user input and call the api accordingly and update the movie list
   filter() {
+    let filter = true;
     if (this.form.value.year !== 'All' && this.form.value.category !== 'All') {
       this.http
         .get<any>(
@@ -67,6 +63,7 @@ export class FilterComponent implements OnInit,OnDestroy {
             this.form.value.category
         )
         .subscribe((resData) => {
+          if(resData['Response'] === 'True'){
           resData['Search'].forEach((movie) => {
             this.loadedMovieList.push(
               new Movie(
@@ -78,7 +75,13 @@ export class FilterComponent implements OnInit,OnDestroy {
             );
           });
           this.movieService.modifyMovies(this.loadedMovieList);
-        });
+      }else{
+        filter = false;
+      console.log('No results found');
+      alert('No results found');
+    }
+    this.modalCtrl.dismiss({filtered: ''+filter}, ''+filter);
+  });
     }
     if (this.form.value.year === 'All' && this.form.value.category === 'All') {
       this.http
@@ -86,6 +89,7 @@ export class FilterComponent implements OnInit,OnDestroy {
           'https://www.omdbapi.com/?apikey=2c3f3c8&s=' + this.searchedMovie
         )
         .subscribe((resData) => {
+          if(resData['Response'] === 'True'){
           resData['Search'].forEach((movie) => {
             this.loadedMovieList.push(
               new Movie(
@@ -97,6 +101,12 @@ export class FilterComponent implements OnInit,OnDestroy {
             );
           });
           this.movieService.modifyMovies(this.loadedMovieList);
+        }else{
+          filter = false;
+            console.log('No results found');
+            alert('No results found');
+          }
+          this.modalCtrl.dismiss({filtered: ''+filter}, ''+filter);
         });
     }
     if (this.form.value.year !== 'All' && this.form.value.category === 'All') {
@@ -108,6 +118,7 @@ export class FilterComponent implements OnInit,OnDestroy {
             this.form.value.year
         )
         .subscribe((resData) => {
+          if(resData['Response'] === 'True'){
           resData['Search'].forEach((movie) => {
             this.loadedMovieList.push(
               new Movie(
@@ -119,6 +130,12 @@ export class FilterComponent implements OnInit,OnDestroy {
             );
           });
           this.movieService.modifyMovies(this.loadedMovieList);
+        }else{
+          filter = false;
+            console.log('No results found');
+            alert('No results found');
+          }
+          this.modalCtrl.dismiss({filtered: ''+filter}, ''+filter);
         });
     }
     if (this.form.value.year === 'All' && this.form.value.category !== 'All') {
@@ -130,6 +147,7 @@ export class FilterComponent implements OnInit,OnDestroy {
             this.form.value.category
         )
         .subscribe((resData) => {
+          if(resData['Response'] === 'True'){
           resData['Search'].forEach((movie) => {
             this.loadedMovieList.push(
               new Movie(
@@ -141,8 +159,13 @@ export class FilterComponent implements OnInit,OnDestroy {
             );
           });
           this.movieService.modifyMovies(this.loadedMovieList);
-        });
+        }else{
+          filter = false;
+          console.log('No results found');
+          alert('No results found');
+        }
+        this.modalCtrl.dismiss({filtered: ''+filter}, ''+filter);
+      });
     }
-    this.modalCtrl.dismiss();
   }
 }

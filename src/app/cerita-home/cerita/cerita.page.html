@@ -28,14 +28,14 @@
 <ion-row *ngFor="let result of loadedMovieList">
   <ion-col>
       <ion-item>
-        <ion-avatar slot="start" [routerLink]="[
+        <ion-avatar *ngIf="result.image !== 'N/A'" slot="start" [routerLink]="[
         '/',
         'cerita-home',
         'tabs',
         'cerita',
         result.id
         ]">
-          <img [src]="result.image" *ngIf="result.image !== 'N/A'">
+          <img [src]="result.image">
         </ion-avatar>
         <h4 class="ion-padding" [routerLink]="[
         '/',
@@ -58,6 +58,16 @@
           </ion-button>
         </ion-buttons>
       </ion-item>
+  </ion-col>
+</ion-row>
+<ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" [disabled]="numTimesLeft <= 0">
+  <ion-infinite-scroll-content
+    loadingSpinner="bubbles"
+    loadingText="Loading more data...">
+  </ion-infinite-scroll-content>
+</ion-infinite-scroll>
+<ion-row>
+  <ion-col>
   </ion-col>
 </ion-row>
 </ion-grid>

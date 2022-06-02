@@ -10,14 +10,14 @@
   <ion-col>
     <ion-list>
       <ion-item *ngFor="let result of loadedMovieList">
-        <ion-avatar slot="start" [routerLink]="[
+        <ion-avatar *ngIf="result.image !== 'N/A'" slot="start" [routerLink]="[
         '/',
         'cerita-home',
         'tabs',
         'saved',
         result.id
         ]">
-          <img [src]="result.image" *ngIf="result.image !== 'N/A'">
+          <img [src]="result.image">
         </ion-avatar>
         <h4 class="ion-padding" [routerLink]="[
         '/',

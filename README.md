@@ -1,5 +1,109 @@
-Movie App
+# 🎬 Movie App (Cerita)
 
-This app is for user to search for movies they like and save it for further reference. The user is able to add a description to the movie that has been saved/liked. The user may also edit the details of the saved movie as well as delete/unlike the movie.
+A mobile application that allows users to search for movies, save their favourites, and manage personal notes for future reference.
 
-This app contains 6 pages, 2 modal components and one service. The saved movies data are stored in Firebase's Realtime Database. The 6 pages consists of the cerita-home page which holds two tabs that leads to cerita page and saved page. The cerita page contains a search bar, a filter function and will display the list of movies from the Omdb API depending on the query requested. The results are displayed in a list of rows which contains the movie poster, title, year and a heart button. When pressed, the row will lead to the cerita details page which lists down the movie details along with another heart button. Both of the heart buttons in the cerita page and cerita details page work the same. When the outline heart button is pressed, the movie will be saved and the heart will change from outline to fill. When a filled heart is pressed, the movie will be removed and the heart will change from fill to outline. All the liked movies will be displayed as a list in the saved page along with an edit and dislike button. When the row is pressed, it will redirect to the saved movie details page where the user can add description and also press the edit button.
+The app integrates with the OMDb API for movie search and uses Firebase Realtime Database to store liked movies and user-added descriptions.
+
+---
+
+## ✨ Features
+
+- Search movies using the OMDb API
+- Like and unlike movies
+- View saved movies in a dedicated page
+- Add, edit, and delete personal descriptions for saved movies
+- Real-time data storage using Firebase Realtime Database
+
+---
+
+## 🧠 What This Project Demonstrates
+
+- API integration and dynamic search functionality
+- State management across multiple pages
+- CRUD operations with Firebase Realtime Database
+- Reusable components and services
+- Navigation using tabs, pages, and modals
+
+---
+
+## 📱 App Structure
+
+The app consists of:
+- 6 pages
+- 2 modal components
+- 1 service
+
+### Pages Overview
+
+**Home Page (Tabs)**
+- Contains two tabs:
+  - Cerita Page
+  - Saved Page
+
+**Cerita Page**
+- Search bar for movie queries
+- Filter functionality
+- Displays movie results from the OMDb API
+- Each movie row includes:
+  - Poster
+  - Title
+  - Release year
+  - Heart (like/unlike) button
+
+**Cerita Details Page**
+- Displays detailed movie information
+- Includes a heart button to save or remove the movie
+
+**Saved Page**
+- Displays all liked movies stored in Firebase
+- Each item includes:
+  - Edit button
+  - Dislike (remove) button
+
+**Saved Movie Details Page**
+- Allows users to:
+  - Add or edit a personal description
+  - Update saved movie details
+
+---
+
+## ❤️ Like / Unlike Behaviour
+
+- Pressing the outline heart:
+  - Saves the movie to Firebase
+  - Changes the heart icon to filled
+
+- Pressing the filled heart:
+  - Removes the movie from Firebase
+  - Changes the heart icon back to outline
+
+This behaviour is consistent across both the movie list and movie details pages.
+
+---
+
+## 🛠 Tech Stack
+
+- Ionic / Angular
+- TypeScript
+- OMDb API
+- Firebase Realtime Database
+
+---
+
+## 📸 Screenshots
+
+_Coming soon_
+
+---
+
+## 🚀 How to Run the Project
+
+1. Clone the repository
+   ```bash
+   git clone https://github.com/aliyafatihah/ionic-movies-app.git
+2. Install dependencies
+   ```bash
+   npm install
+3. Run the app
+   ```bash
+   ionic serve
